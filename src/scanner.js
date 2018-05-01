@@ -100,9 +100,9 @@ class Analyzer {
       let result = new Uint8Array(ZXing.HEAPU8.buffer, ptr, len);
       let str = String.fromCharCode.apply(null, result);
       if (resultIndex === 0) {
-        window.zxDecodeResult = '';
-      }
-      window.zxDecodeResult += str;
+        window.zxDecodeResult = [];
+      } 
+      window.zxDecodeResult.push(str);
     });
   }
 
@@ -142,7 +142,7 @@ class Analyzer {
       ZXing.HEAPU8[this.imageBuffer + j] = Math.trunc((r + g + b) / 3);
     }
 
-    let err = ZXing._decode_qr(this.decodeCallback);
+    let err = ZXing._decode_qr_multi(this.decodeCallback);
     if (err) {
       return null;
     }
